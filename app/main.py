@@ -15,9 +15,13 @@ def on_startup():
     DB_SESSION = db.get_session()
     sync_table(User)
 
-# @app.on_event('sh')
 
 
 @app.get('/')
 def homepage():
     return dict(hello='world',)
+
+@app.get('/users')
+def users_list_view():
+    q = User.objects.all().limit(10)
+    return list(q)
