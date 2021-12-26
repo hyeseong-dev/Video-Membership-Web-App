@@ -1,0 +1,9 @@
+venv
+env
+.env
+.venv
+__pycahce__
+*.pyc
+
+connect_bundle
+secure-connect-video-membership-project.zip
