@@ -27,3 +27,8 @@
 - Database for Testing
     - keyspace -> project 1
         - tables (correspond to prod)
+
+
+```
+User.create_user
+```
