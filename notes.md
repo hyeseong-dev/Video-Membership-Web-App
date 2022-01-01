@@ -32,3 +32,13 @@
 ```
 User.create_user
 ```
+
+```python
+from app import db
+from app.users.models import User
+from cassandra.cqlengine.management import sync_table
+
+db.get_session()
+sync_table(User)
+
+```
