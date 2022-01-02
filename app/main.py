@@ -1,14 +1,21 @@
-from fastapi import FastAPI
+import pathlib
 
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from cassandra.cqlengine.management import sync_table
 
 from . import config, db
 from .users.models import User
 
-app = FastAPI()
-# settings = config.get_settings()
-DB_SESSION = None
+BASE_DIR = pathlib.Path(__file__).resolve().parent # app/
+TEMPLATE_DIR = BASE_DIR / "templates"
 
+app = FastAPI()
+templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
+
+DB_SESSION = None
+# settings = config.get_settings()
 
 @app.on_event("startup")
 def on_startup():
@@ -19,11 +26,10 @@ def on_startup():
     sync_table(User)
 
 
-@app.get("/")
-def homepage():
-    return dict(
-        hello="world",
-    )
+@app.get("/", response_class=HTMLResponse)
+def homepage(request: Request):
+    context = {'request':request, 'abc':123}
+    return templates.TemplateResponse('home.html', context)
 
 
 @app.get("/users")
