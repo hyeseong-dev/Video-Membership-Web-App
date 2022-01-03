@@ -8,6 +8,7 @@ from cassandra.cqlengine.management import sync_table
 from pydantic.error_wrappers import ValidationError
 
 from . import config, db
+from app import utils
 from app.users import schemas
 from app.users.models import User
 
@@ -64,22 +65,19 @@ def signup_post_view(request: Request,
     password: str = Form(...),
     password_confirm: str = Form(...)
     ):
-    data = {}
-    errors = []
-    error_str = ""
-    try:
-        cleaned_data = schemas.UserSignupSchema(email=email, password=password, password_confirm=password_confirm)
-        data = cleaned_data.dict()
-    except ValidationError as e:
-        error_str = e.json()
-    try:
-        errors = json.loads(error_str)
-    except Exception as e:
-        errors = [{"loc": "non_field_error", "msg": "Unknown error"}]
-    return templates.TemplateResponse("auth/signup.html", {
-        "request": request,
-        "data": data,
-        "errors": errors,
+    raw_data = {
+        'email': email,
+        'password': password,
+        'password_confirm': password_confirm
+    }
+    data, errors = utils.valid_schema_data_or_error(raw_data, schemas.UserSignupSchema)
+    print(data, errors)
+    print(data['password'].get_secret_value())
+    
+    return templates.TemplateResponse('auth/login.html', {
+        'request': request,
+        'data': data,
+        'errors': errors
     })
 
 
