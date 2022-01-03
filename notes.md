@@ -89,3 +89,58 @@ data.json()
 data.dict()['password']
 data.dict()['password'].get_secret_value()
 ```
+
+
+```python
+import datetime
+import secrets
+from jose import jwt
+
+secret_key = secrets.token_urlsafe(50)
+secret_key
+
+algo = "HS256"
+
+expires_after = 10
+
+raw_data = {
+    "user_id":'abc123',
+    "role": "admin",
+    "email": "do not do this",
+    "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_after)
+}
+encode_token = jwt.encode(raw_data, secret_key)
+encode_token = jwt.encode(raw_data, secret_key, algorithm=algo)
+
+j = User.objects.filter(raw_data, secret_key, algorithm=algo)
+
+def login(user_id, expires=5):
+    try : 
+        raw_data = {
+            "user_id":'abc123',
+            "role": "admin",
+            "email": "do not do this",
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(seconds=expires_after)
+        }
+        return jwt.decode(encode_token, secret_key, algorithms=[algo])
+    except ExpiredSignatureError as e:
+        print(e)
+
+token = login(j.user_id, expires=5)
+token
+
+
+def verify_user(token):
+    data = None
+    verified = False
+    try:
+        data = jwt.decode(token, secret_key, algorithms=[algo])
+        verified = True
+    except ExpiredSignatureError as e:
+        print(e)
+    except :
+        pass
+    return data, verified
+
+verify_user(token)
+```
