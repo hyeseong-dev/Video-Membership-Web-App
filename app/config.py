@@ -1,17 +1,8 @@
 import os
-<<<<<<< HEAD
-
-from functools import lru_cache
-from pydantic import BaseSettings, Field
-
-os.environ['CQLENG_ALLOW_SCHEMA_MANAGEMENT'] = '1'
-=======
 from functools import lru_cache
 from pydantic import BaseSettings, Field
 
 os.environ["CQLENG_ALLOW_SCHEMA_MANAGEMENT"] = "1"
-
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
 
 class Settings(BaseSettings):
     keyspace: str = Field(..., env="ASTRADB_KEYSPACE")

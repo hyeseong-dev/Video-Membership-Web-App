@@ -3,13 +3,7 @@ from app.config import get_settings
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 
-<<<<<<< HEAD
-from . import validators
-=======
 from . import validators, securities
-
-settings = get_settings()
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
 
 settings = get_settings()
 
@@ -23,22 +17,6 @@ class User(Model):
         return self.__repr__()
 
     def __repr__(self):
-<<<<<<< HEAD
-        return f'User(email={self.email}, user_id={self.user_id})'
-    
-    @staticmethod
-    def create_user(email, password=None):
-        q = User.objects.filter(email=email)
-        if q.count() != 0:
-            raise Exception("User already has account.")
-        valid, msg, email = validators._validate_email(email=email)
-        if not valid:
-            raise Exception(f'Invalid email: {msg}')
-        obj = User(email=email)
-        obj.password = password
-        obj.save()
-        return obj
-=======
         return f"User(email={self.email}, user_id={self.user_id})"
 
     def set_password(self, raw_password, commit=False):
@@ -65,4 +43,3 @@ class User(Model):
         # obj.password = password
         obj.save()
         return obj
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15

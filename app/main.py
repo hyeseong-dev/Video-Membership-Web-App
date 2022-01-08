@@ -1,12 +1,6 @@
 import json
 import pathlib
 
-<<<<<<< HEAD
-from cassandra.cqlengine.management import sync_table
-
-from . import config, db
-from app.users.models import User
-=======
 from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
@@ -20,7 +14,6 @@ from app.users.models import User
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent # app/
 TEMPLATE_DIR = BASE_DIR / "templates"
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
 
 app = FastAPI()
 templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
@@ -28,14 +21,6 @@ templates = Jinja2Templates(directory=str(TEMPLATE_DIR))
 DB_SESSION = None
 # settings = config.get_settings()
 
-<<<<<<< HEAD
-@app.on_event('startup')
-def on_startup():
-    # triggered when fastapi starts
-    print('hello world')
-    DB_SESSION = db.get_session()
-    sync_table(User)
-=======
 @app.on_event("startup")
 def on_startup():
     # triggered when fastapi start
@@ -73,8 +58,6 @@ def signup_get_view(request: Request):
         "request": request,
     })
 
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
-
 @app.post("/signup", response_class=HTMLResponse)
 def signup_post_view(request: Request, 
     email: str=Form(...), 
@@ -96,19 +79,7 @@ def signup_post_view(request: Request,
         'errors': errors
     })
 
-
-<<<<<<< HEAD
-@app.get('/')
-def homepage():
-    return dict(hello='world',)
-
-@app.get('/users')
-def users_list_view():
-    q = User.objects.all().limit(10)
-    return list(q)
-=======
 @app.get("/users")
 def users_list_view():
     q = User.objects.all().limit(10)
     return list(q)
->>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
