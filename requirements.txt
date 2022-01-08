@@ -2,4 +2,13 @@ fastapi
 uvicorn
 cassandra-driver
 python-dotenv
+<<<<<<< HEAD
 email-validator
+=======
+email-validator
+argon2-cffi
+pytest
+jinja2
+python-multipart
+python-jose[cryptography]
+>>>>>>> dfca13acd72a73f43e494b706157848627ec4d15
