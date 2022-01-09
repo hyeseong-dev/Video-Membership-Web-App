@@ -7,6 +7,8 @@ from . import validators, securities
 
 settings = get_settings()
 
+settings = get_settings()
+
 class User(Model):
     __keyspace__ = settings.keyspace
     email = columns.Text(primary_key=True)

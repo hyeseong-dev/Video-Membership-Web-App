@@ -58,6 +58,7 @@ def signup_get_view(request: Request):
         "request": request,
     })
 
+
 @app.post("/signup", response_class=HTMLResponse)
 def signup_post_view(request: Request, 
     email: str=Form(...), 
@@ -78,6 +79,7 @@ def signup_post_view(request: Request,
         'data': data,
         'errors': errors
     })
+
 
 @app.get("/users")
 def users_list_view():
